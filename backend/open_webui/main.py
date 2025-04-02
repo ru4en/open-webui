@@ -76,6 +76,7 @@ from open_webui.routers import (
     tools,
     users,
     utils,
+    router,
 )
 
 from open_webui.routers.retrieval import (
@@ -887,6 +888,8 @@ async def inspect_websocket(request: Request, call_next):
     return await call_next(request)
 
 
+CORS_ALLOW_ORIGIN = [f"http://localhost:5173", f"http://localhost:3000"]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ALLOW_ORIGIN,
@@ -923,6 +926,7 @@ app.include_router(models.router, prefix="/api/v1/models", tags=["models"])
 app.include_router(knowledge.router, prefix="/api/v1/knowledge", tags=["knowledge"])
 app.include_router(prompts.router, prefix="/api/v1/prompts", tags=["prompts"])
 app.include_router(tools.router, prefix="/api/v1/tools", tags=["tools"])
+app.include_router(router.router, prefix="/api/v1/routers", tags=["routers"])
 
 app.include_router(memories.router, prefix="/api/v1/memories", tags=["memories"])
 app.include_router(folders.router, prefix="/api/v1/folders", tags=["folders"])
